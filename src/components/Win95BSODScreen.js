@@ -17,6 +17,7 @@ class Win95BSODScreen extends HTMLElement {
         font-family: "IBM Plex Mono";
         font-weight: bold;
         font-size: 14px;
+        cursor: none;
       }
 
       .title {

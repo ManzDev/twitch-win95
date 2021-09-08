@@ -16,8 +16,27 @@ class Win95StartButton extends HTMLElement {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 50px;
+        width: 54px;
         height: 20px;
+      }
+
+      :host([selected]) .button {
+        border: 1px solid #000;
+        border-bottom-color: #fff;
+        border-right-color: #fff;
+        box-shadow:
+          1px 1px 0 #828282 inset,
+          -1px -1px 0 #DFD8DF inset;
+        position: relative;
+      }
+
+      :host([selected]) .button::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 90%;
+        height: 65%;
+        border: 1px dotted #000;
       }
 
       .button span {
@@ -29,8 +48,13 @@ class Win95StartButton extends HTMLElement {
     `;
   }
 
+  select() {
+    this.setAttribute("selected", true);
+  }
+
   connectedCallback() {
     this.render();
+    this.shadowRoot.addEventListener("click", () => this.select());
   }
 
   render() {

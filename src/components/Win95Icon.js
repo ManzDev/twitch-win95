@@ -11,10 +11,10 @@ class Win95Icon extends HTMLElement {
         flex-direction: column;
         align-items: center;
         gap: 4px;
-        margin: 8px 0;
+        margin: 6px 2px;
       }
 
-      .icon {
+      .icon-container, .icon {
         width: var(--icon-size, 32px);
         height: var(--icon-size, 32px);
       }
@@ -27,31 +27,60 @@ class Win95Icon extends HTMLElement {
         color: #fff;
         padding: 2px 4px;
         text-align: center;
+        border: 1px solid transparent;
+      }
+
+      :host([selected]) .icon {
+        filter: brightness(0.4);
+      }
+
+      :host([selected]) .icon-container {
+        position: relative;
+      }
+
+      :host([selected]) .icon-container::after {
+        content: "";
+        display: block;
+        background: #000082;
+        inset: 0;
+        position: absolute;
+        mix-blend-mode: exclusion;
       }
 
       :host([selected]) .name {
         background: #000082;
         color: #fff;
+        border: 1px dotted #828282;
       }
     `;
   }
 
-  select() {
+  unselect() {
+    this.removeAttribute("selected");
+  }
+
+  select(data) {
+    if (!data.ctrlKey) {
+      const event = new CustomEvent("unselect-all", { composed: true });
+      this.dispatchEvent(event);
+    }
     this.setAttribute("selected", true);
   }
 
   connectedCallback() {
     this.name = this.getAttribute("name") ?? "my-computer";
     this.render();
-    this.addEventListener("click", () => this.select());
+    this.addEventListener("click", (ev) => this.select({ ctrlKey: ev.ctrlKey }));
   }
 
   render() {
-    const imagePath = `icons/${this.name}.png`;
+    const imagePath = `icons/32x32/${this.name}.png`;
     const text = this.name.replace(/-/g, " ");
     this.shadowRoot.innerHTML = /* html */`
     <style>${Win95Icon.styles}</style>
-    <img class="icon" src="${imagePath}" alt="${text}">
+    <div class="icon-container">
+      <img class="icon" src="${imagePath}" alt="${text}">
+    </div>
     <div class="name">${text}</div>`;
   }
 }

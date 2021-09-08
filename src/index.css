@@ -8,6 +8,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Windows";
+  src:
+    url("fonts/windows.woff2") format("woff2"),
+    url("fonts/windows.woff") format("woff");
+  font-display: swap;
+}
+
 html,
 body {
   width: 100%;
@@ -22,4 +30,5 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: none;
 }

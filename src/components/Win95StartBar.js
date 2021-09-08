@@ -1,6 +1,7 @@
 import "./Win95StartButton.js";
 import "./Win95StateBar.js";
 import "./Win95DateBar.js";
+import "./Win95Button.js";
 
 class Win95StartBar extends HTMLElement {
   constructor() {
@@ -33,8 +34,8 @@ class Win95StartBar extends HTMLElement {
     this.shadowRoot.innerHTML = /* html */`
     <style>${Win95StartBar.styles}</style>
     <win95-start-button></win95-start-button>
-    <win95-state-bar name="Welcome"></win95-state-bar>
-    <win95-state-bar icon="minesweeper" name="Minesweeper"></win95-state-bar>
+    <win95-state-bar text="Welcome"></win95-state-bar>
+    <win95-state-bar icon="minesweeper" text="Minesweeper"></win95-state-bar>
     <win95-date-bar></win95-date-bar>
     `;
   }

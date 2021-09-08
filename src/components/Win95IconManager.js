@@ -4,6 +4,7 @@ class Win95IconManager extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.appList = ["my-computer", "network-neighborhood", "inbox", "recycle-bin", "the-microsoft-network", "my-briefcase", "internet-explorer"];
   }
 
   static get styles() {
@@ -24,21 +25,33 @@ class Win95IconManager extends HTMLElement {
     `;
   }
 
+  unselectAll() {
+    console.log("unselectAll");
+    const icons = this.shadowRoot.querySelectorAll("win95-icon");
+    icons.forEach((icon) => {
+      icon.unselect();
+    });
+  }
+
+  updateAppList() {
+    const container = this.shadowRoot.querySelector(".container");
+    this.appList.forEach((name) => {
+      const icon = document.createElement("win95-icon");
+      icon.setAttribute("name", name);
+      container.appendChild(icon);
+    });
+  }
+
   connectedCallback() {
     this.render();
+    this.updateAppList();
+    this.addEventListener("unselect-all", this.unselectAll);
   }
 
   render() {
     this.shadowRoot.innerHTML = /* html */`
     <style>${Win95IconManager.styles}</style>
-    <div class="container">
-      <win95-icon name="my-computer"></win95-icon>
-      <win95-icon name="network-neighborhood"></win95-icon>
-      <win95-icon name="inbox"></win95-icon>
-      <win95-icon name="recycle-bin"></win95-icon>
-      <win95-icon name="the-microsoft-network"></win95-icon>
-      <win95-icon name="my-briefcase"></win95-icon>
-    </div>`;
+    <div class="container"></div>`;
   }
 }
 
